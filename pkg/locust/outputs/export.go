@@ -4,8 +4,8 @@ import (
 	"fmt"
 	locustnetutilsport "github.com/plantoncloud/locust-kubernetes-pulumi-blueprint/pkg/locust/network/ingress/netutils/port"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/commons/english/enums/englishword"
-	"github.com/plantoncloud/pulumi-stack-runner-go-sdk/pkg/name/output/custom"
-	puluminamekubeoutput "github.com/plantoncloud/pulumi-stack-runner-go-sdk/pkg/name/provider/kubernetes/output"
+	"github.com/plantoncloud/pulumi-blueprint-golang-commons/pkg/kubernetes/pulumikubernetesprovider"
+	"github.com/plantoncloud/pulumi-blueprint-golang-commons/pkg/pulumi/pulumicustomoutput"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
@@ -30,35 +30,35 @@ func Export(ctx *pulumi.Context) error {
 }
 
 func GetExternalClusterHostnameOutputName() string {
-	return custom.Name("external-hostname")
+	return pulumicustomoutput.Name("external-hostname")
 }
 
 func GetInternalClusterHostnameOutputName() string {
-	return custom.Name("internal-hostname")
+	return pulumicustomoutput.Name("internal-hostname")
 }
 
 func GetKubeServiceNameOutputName() string {
-	return custom.Name("service-name")
+	return pulumicustomoutput.Name("service-name")
 }
 
 func GetKubeEndpointOutputName() string {
-	return custom.Name("kube-endpoint")
+	return pulumicustomoutput.Name("kube-endpoint")
 }
 
 func GetKubePortForwardCommandOutputName() string {
-	return custom.Name("kube-port-forward-command")
+	return pulumicustomoutput.Name("kube-port-forward-command")
 }
 
 func GetExternalLoadBalancerIp() string {
-	return custom.Name("ingress-external-lb-ip")
+	return pulumicustomoutput.Name("ingress-external-lb-ip")
 }
 
 func GetInternalLoadBalancerIp() string {
-	return custom.Name("ingress-internal-lb-ip")
+	return pulumicustomoutput.Name("ingress-internal-lb-ip")
 }
 
 func GetNamespaceNameOutputName() string {
-	return puluminamekubeoutput.Name(kubernetescorev1.Namespace{}, englishword.EnglishWord_namespace.String())
+	return pulumikubernetesprovider.PulumiOutputName(kubernetescorev1.Namespace{}, englishword.EnglishWord_namespace.String())
 }
 
 // getKubePortForwardCommand returns kubectl port-forward command that can be used by developers.

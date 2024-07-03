@@ -7,13 +7,13 @@ import (
 	locustnetutilshostname "github.com/plantoncloud/locust-kubernetes-pulumi-blueprint/pkg/locust/network/ingress/netutils/hostname"
 	locustnetutilsservice "github.com/plantoncloud/locust-kubernetes-pulumi-blueprint/pkg/locust/network/ingress/netutils/service"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubecluster/enums/kubernetesworkloadingresstype"
-	plantoncloudpulumisdkkubernetes "github.com/plantoncloud/pulumi-stack-runner-go-sdk/pkg/automation/provider/kubernetes"
+	"github.com/plantoncloud/pulumi-blueprint-golang-commons/pkg/kubernetes/pulumikubernetesprovider"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
 func loadConfig(ctx *pulumi.Context, resourceStack *ResourceStack) (*locustcontextstate.ContextState, error) {
 
-	kubernetesProvider, err := plantoncloudpulumisdkkubernetes.GetWithStackCredentials(ctx, resourceStack.Input.CredentialsInput)
+	kubernetesProvider, err := pulumikubernetesprovider.GetWithStackCredentials(ctx, resourceStack.Input.CredentialsInput)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to setup kubernetes provider")
 	}
