@@ -4,8 +4,8 @@ import (
 	"context"
 	"github.com/pkg/errors"
 	"github.com/plantoncloud/locust-kubernetes-pulumi-blueprint/pkg/locust/outputs"
-	"github.com/plantoncloud/pulumi-stack-runner-go-sdk/pkg/org"
-	"github.com/plantoncloud/pulumi-stack-runner-go-sdk/pkg/stack/output/backend"
+	"github.com/plantoncloud/stack-job-runner-golang-sdk/pkg/org"
+	"github.com/plantoncloud/stack-job-runner-golang-sdk/pkg/stack/output/backend"
 
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/iac/v1/stackjob/enums/stackjoboperationtype"
 
