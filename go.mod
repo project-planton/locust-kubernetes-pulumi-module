@@ -1,4 +1,4 @@
-module github.com/plantoncloud/locust-kubernetes-pulumi-blueprint
+module github.com/plantoncloud/locust-kubernetes-pulumi-module
 
 go 1.22
 
