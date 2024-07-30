@@ -1,8 +1,6 @@
-module github.com/plantoncloud/locust-kubernetes-pulumi-blueprint
+module github.com/plantoncloud/locust-kubernetes-pulumi-module
 
 go 1.22
-
-toolchain go1.22.3
 
 replace github.com/plantoncloud/planton-cloud-apis => ../../plantoncloud/planton-cloud-apis
 
