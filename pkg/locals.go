@@ -3,7 +3,7 @@ package pkg
 import (
 	"fmt"
 	"github.com/plantoncloud/locust-kubernetes-pulumi-module/pkg/outputs"
-	locustkubernetesmodel "github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/locustkubernetes/model"
+	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/locustkubernetes"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
@@ -17,10 +17,10 @@ type Locals struct {
 	KubeServiceFqdn              string
 	KubeServiceName              string
 	Namespace                    string
-	LocustKubernetes             *locustkubernetesmodel.LocustKubernetes
+	LocustKubernetes             *locustkubernetes.LocustKubernetes
 }
 
-func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetesmodel.LocustKubernetesStackInput) *Locals {
+func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetes.LocustKubernetesStackInput) *Locals {
 	locals := &Locals{}
 	//assign value for the locals variable to make it available across the project
 	locals.LocustKubernetes = stackInput.ApiResource

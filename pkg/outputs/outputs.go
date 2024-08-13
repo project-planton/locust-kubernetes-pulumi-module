@@ -1,7 +1,7 @@
 package outputs
 
 import (
-	locustkubernetesmodel "github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/locustkubernetes/model"
+	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/locustkubernetes"
 	"github.com/plantoncloud/stack-job-runner-golang-sdk/pkg/automationapi/autoapistackoutput"
 	"github.com/pulumi/pulumi/sdk/v3/go/auto"
 )
@@ -16,8 +16,8 @@ const (
 )
 
 func PulumiOutputsToStackOutputsConverter(pulumiOutputs auto.OutputMap,
-	input *locustkubernetesmodel.LocustKubernetesStackInput) *locustkubernetesmodel.LocustKubernetesStackOutputs {
-	return &locustkubernetesmodel.LocustKubernetesStackOutputs{
+	input *locustkubernetes.LocustKubernetesStackInput) *locustkubernetes.LocustKubernetesStackOutputs {
+	return &locustkubernetes.LocustKubernetesStackOutputs{
 		Namespace:          autoapistackoutput.GetVal(pulumiOutputs, Namespace),
 		KubeEndpoint:       autoapistackoutput.GetVal(pulumiOutputs, KubeEndpoint),
 		Service:            autoapistackoutput.GetVal(pulumiOutputs, Service),
