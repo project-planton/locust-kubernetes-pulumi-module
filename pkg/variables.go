@@ -1,16 +1,15 @@
 package pkg
 
 var vars = struct {
-	IstioIngressNamespace      string
-	IstioIngressSelectorLabels map[string]string
-	MainPyConfigMapName        string
-	LibFilesConfigMapName      string
+	GatewayExternalLoadBalancerServiceHostname string
+	GatewayIngressClassName                    string
+	IstioIngressNamespace                      string
+	LibFilesConfigMapName                      string
+	MainPyConfigMapName                        string
 }{
-	IstioIngressNamespace: "istio-ingress",
-	IstioIngressSelectorLabels: map[string]string{
-		"app":   "gateway",
-		"istio": "gateway",
-	},
-	MainPyConfigMapName:   "main-py",
-	LibFilesConfigMapName: "lib-files",
+	GatewayExternalLoadBalancerServiceHostname: "ingress-external.istio-ingress.svc.cluster.local",
+	GatewayIngressClassName:                    "istio",
+	IstioIngressNamespace:                      "istio-ingress",
+	LibFilesConfigMapName:                      "lib-files",
+	MainPyConfigMapName:                        "main-py",
 }
