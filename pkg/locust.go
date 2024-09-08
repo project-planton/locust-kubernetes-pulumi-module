@@ -2,8 +2,8 @@ package pkg
 
 import (
 	"github.com/pkg/errors"
+	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/datatypes/stringmaps/mergestringmaps"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/containerresources"
-	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/helm/mergemaps"
 	kubernetescorev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
 	helmv3 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/helm/v3"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/meta/v1"
@@ -61,7 +61,7 @@ func locust(ctx *pulumi.Context, locals *Locals,
 			"locust_lib_configmap":        pulumi.String(vars.LibFilesConfigMapName),
 		},
 	}
-	mergemaps.MergeMapToPulumiMap(helmValues, locals.LocustKubernetes.Spec.HelmValues)
+	mergestringmaps.MergeMapToPulumiMap(helmValues, locals.LocustKubernetes.Spec.HelmValues)
 
 	// Deploying a Locust Helm chart from the Helm repository.
 	_, err = helmv3.NewChart(ctx, locals.LocustKubernetes.Metadata.Id, helmv3.ChartArgs{
