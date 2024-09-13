@@ -10,7 +10,8 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func istioIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetescorev1.Namespace, kubernetesProvider *kubernetes.Provider, labels map[string]string) error {
+func ingress(ctx *pulumi.Context, locals *Locals, createdNamespace *kubernetescorev1.Namespace,
+	kubernetesProvider *kubernetes.Provider) error {
 	// Create certificate
 	createdCertificate, err := certmanagerv1.NewCertificate(ctx,
 		"ingress-certificate",
@@ -18,7 +19,7 @@ func istioIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *kuberne
 			Metadata: metav1.ObjectMetaArgs{
 				Name:      pulumi.String(locals.LocustKubernetes.Metadata.Id),
 				Namespace: pulumi.String(vars.IstioIngressNamespace),
-				Labels:    pulumi.ToStringMap(labels),
+				Labels:    pulumi.ToStringMap(locals.Labels),
 			},
 			Spec: certmanagerv1.CertificateSpecArgs{
 				DnsNames:   pulumi.ToStringArray(locals.IngressHostnames),
@@ -40,7 +41,7 @@ func istioIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *kuberne
 			Metadata: metav1.ObjectMetaArgs{
 				Name:      pulumi.Sprintf("%s-external", locals.LocustKubernetes.Metadata.Id),
 				Namespace: pulumi.String(vars.IstioIngressNamespace),
-				Labels:    pulumi.ToStringMap(labels),
+				Labels:    pulumi.ToStringMap(locals.Labels),
 			},
 			Spec: gatewayv1.GatewaySpecArgs{
 				GatewayClassName: pulumi.String(vars.GatewayIngressClassName),
@@ -95,7 +96,7 @@ func istioIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *kuberne
 			Metadata: metav1.ObjectMetaArgs{
 				Name:      pulumi.String("http-external-redirect"),
 				Namespace: createdNamespace.Metadata.Name(),
-				Labels:    pulumi.ToStringMap(labels),
+				Labels:    pulumi.ToStringMap(locals.Labels),
 			},
 			Spec: gatewayv1.HTTPRouteSpecArgs{
 				Hostnames: pulumi.StringArray{pulumi.String(locals.IngressExternalHostname)},
@@ -129,7 +130,7 @@ func istioIngress(ctx *pulumi.Context, locals *Locals, createdNamespace *kuberne
 			Metadata: metav1.ObjectMetaArgs{
 				Name:      pulumi.String("https-external"),
 				Namespace: createdNamespace.Metadata.Name(),
-				Labels:    pulumi.ToStringMap(labels),
+				Labels:    pulumi.ToStringMap(locals.Labels),
 			},
 			Spec: gatewayv1.HTTPRouteSpecArgs{
 				Hostnames: pulumi.StringArray{pulumi.String(locals.IngressExternalHostname)},

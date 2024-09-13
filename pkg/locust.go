@@ -11,13 +11,13 @@ import (
 )
 
 func locust(ctx *pulumi.Context, locals *Locals,
-	createdNamespace *kubernetescorev1.Namespace, labels map[string]string) error {
+	createdNamespace *kubernetescorev1.Namespace) error {
 	// Create a ConfigMap for the main.py file
 	_, err := kubernetescorev1.NewConfigMap(ctx, "main-py", &kubernetescorev1.ConfigMapArgs{
 		Metadata: metav1.ObjectMetaPtrInput(&metav1.ObjectMetaArgs{
 			Name:      pulumi.String(vars.MainPyConfigMapName),
 			Namespace: createdNamespace.Metadata.Name(),
-			Labels:    pulumi.ToStringMap(labels),
+			Labels:    pulumi.ToStringMap(locals.Labels),
 		}),
 		Data: pulumi.StringMap{
 			"main.py": pulumi.String(locals.LocustKubernetes.Spec.LoadTest.MainPyContent),
@@ -33,7 +33,7 @@ func locust(ctx *pulumi.Context, locals *Locals,
 		Metadata: metav1.ObjectMetaPtrInput(&metav1.ObjectMetaArgs{
 			Name:      pulumi.String(vars.LibFilesConfigMapName),
 			Namespace: createdNamespace.Metadata.Name(),
-			Labels:    pulumi.ToStringMap(labels),
+			Labels:    pulumi.ToStringMap(locals.Labels),
 		}),
 		Data: pulumi.ToStringMap(locals.LocustKubernetes.Spec.LoadTest.LibFilesContent),
 	}, pulumi.Timeouts(&pulumi.CustomTimeouts{Create: "10s", Update: "10s", Delete: "10s"}),

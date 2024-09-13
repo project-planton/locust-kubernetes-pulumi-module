@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/plantoncloud/locust-kubernetes-pulumi-module/pkg/outputs"
 	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/locustkubernetes"
+	"github.com/plantoncloud/planton-cloud-apis/zzgo/cloud/planton/apis/commons/apiresource/enums/apiresourcekind"
+	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/kuberneteslabelkeys"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"strconv"
 )
 
 type Locals struct {
@@ -18,6 +21,7 @@ type Locals struct {
 	KubeServiceName              string
 	Namespace                    string
 	LocustKubernetes             *locustkubernetes.LocustKubernetes
+	Labels                       map[string]string
 }
 
 func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetes.LocustKubernetesStackInput) *Locals {
@@ -26,6 +30,14 @@ func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetes.LocustKu
 	locals.LocustKubernetes = stackInput.ApiResource
 
 	locustKubernetes := stackInput.ApiResource
+
+	locals.Labels = map[string]string{
+		kuberneteslabelkeys.Environment:  stackInput.ApiResource.Spec.EnvironmentInfo.EnvId,
+		kuberneteslabelkeys.Organization: stackInput.ApiResource.Spec.EnvironmentInfo.OrgId,
+		kuberneteslabelkeys.Resource:     strconv.FormatBool(true),
+		kuberneteslabelkeys.ResourceId:   stackInput.ApiResource.Metadata.Id,
+		kuberneteslabelkeys.ResourceKind: apiresourcekind.ApiResourceKind_locust_kubernetes.String(),
+	}
 
 	//decide on the namespace
 	locals.Namespace = locustKubernetes.Metadata.Id
