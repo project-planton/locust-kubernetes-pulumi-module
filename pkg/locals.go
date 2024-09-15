@@ -27,15 +27,15 @@ type Locals struct {
 func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetes.LocustKubernetesStackInput) *Locals {
 	locals := &Locals{}
 	//assign value for the locals variable to make it available across the project
-	locals.LocustKubernetes = stackInput.ApiResource
+	locals.LocustKubernetes = stackInput.Target
 
-	locustKubernetes := stackInput.ApiResource
+	locustKubernetes := stackInput.Target
 
 	locals.Labels = map[string]string{
-		kuberneteslabelkeys.Environment:  stackInput.ApiResource.Spec.EnvironmentInfo.EnvId,
-		kuberneteslabelkeys.Organization: stackInput.ApiResource.Spec.EnvironmentInfo.OrgId,
+		kuberneteslabelkeys.Environment:  stackInput.Target.Spec.EnvironmentInfo.EnvId,
+		kuberneteslabelkeys.Organization: stackInput.Target.Spec.EnvironmentInfo.OrgId,
 		kuberneteslabelkeys.Resource:     strconv.FormatBool(true),
-		kuberneteslabelkeys.ResourceId:   stackInput.ApiResource.Metadata.Id,
+		kuberneteslabelkeys.ResourceId:   stackInput.Target.Metadata.Id,
 		kuberneteslabelkeys.ResourceKind: apiresourcekind.ApiResourceKind_locust_kubernetes.String(),
 	}
 
