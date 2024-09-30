@@ -1,10 +1,9 @@
 package pkg
 
 import (
+	locustkubernetesv1 "buf.build/gen/go/plantoncloud/project-planton/protocolbuffers/go/project/planton/apis/provider/kubernetes/locustkubernetes/v1"
 	"fmt"
 	"github.com/plantoncloud/locust-kubernetes-pulumi-module/pkg/outputs"
-	"github.com/plantoncloud/project-planton/apis/zzgo/cloud/planton/apis/code2cloud/v1/kubernetes/locustkubernetes"
-	"github.com/plantoncloud/project-planton/apis/zzgo/cloud/planton/apis/commons/apiresource/enums/apiresourcekind"
 	"github.com/plantoncloud/pulumi-module-golang-commons/pkg/provider/kubernetes/kuberneteslabelkeys"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"strconv"
@@ -20,11 +19,11 @@ type Locals struct {
 	KubeServiceFqdn              string
 	KubeServiceName              string
 	Namespace                    string
-	LocustKubernetes             *locustkubernetes.LocustKubernetes
+	LocustKubernetes             *locustkubernetesv1.LocustKubernetes
 	Labels                       map[string]string
 }
 
-func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetes.LocustKubernetesStackInput) *Locals {
+func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetesv1.LocustKubernetesStackInput) *Locals {
 	locals := &Locals{}
 	//assign value for the locals variable to make it available across the project
 	locals.LocustKubernetes = stackInput.Target
@@ -36,7 +35,7 @@ func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetes.LocustKu
 		kuberneteslabelkeys.Organization: stackInput.Target.Spec.EnvironmentInfo.OrgId,
 		kuberneteslabelkeys.Resource:     strconv.FormatBool(true),
 		kuberneteslabelkeys.ResourceId:   stackInput.Target.Metadata.Id,
-		kuberneteslabelkeys.ResourceKind: apiresourcekind.ApiResourceKind_locust_kubernetes.String(),
+		kuberneteslabelkeys.ResourceKind: "locust_kubernetes",
 	}
 
 	//decide on the namespace
