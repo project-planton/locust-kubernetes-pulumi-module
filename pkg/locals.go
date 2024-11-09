@@ -1,10 +1,10 @@
 package pkg
 
 import (
-	locustkubernetesv1 "buf.build/gen/go/project-planton/apis/protocolbuffers/go/project/planton/provider/kubernetes/locustkubernetes/v1"
 	"fmt"
 	"github.com/project-planton/locust-kubernetes-pulumi-module/pkg/outputs"
-	"github.com/project-planton/pulumi-module-golang-commons/pkg/provider/kubernetes/kuberneteslabelkeys"
+	locustkubernetesv1 "github.com/project-planton/project-planton/apis/go/project/planton/provider/kubernetes/locustkubernetes/v1"
+	"github.com/project-planton/project-planton/pkg/pulmod/provider/kubernetes/kuberneteslabelkeys"
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 	"strconv"
 )
