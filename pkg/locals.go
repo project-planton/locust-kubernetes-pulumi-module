@@ -60,15 +60,15 @@ func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetesv1.Locust
 
 	if locustKubernetes.Spec.Ingress == nil ||
 		!locustKubernetes.Spec.Ingress.IsEnabled ||
-		locustKubernetes.Spec.Ingress.EndpointDomainName == "" {
+		locustKubernetes.Spec.Ingress.DnsDomain == "" {
 		return locals
 	}
 
 	locals.IngressExternalHostname = fmt.Sprintf("%s.%s", locustKubernetes.Metadata.Id,
-		locustKubernetes.Spec.Ingress.EndpointDomainName)
+		locustKubernetes.Spec.Ingress.DnsDomain)
 
 	locals.IngressInternalHostname = fmt.Sprintf("%s-internal.%s", locustKubernetes.Metadata.Id,
-		locustKubernetes.Spec.Ingress.EndpointDomainName)
+		locustKubernetes.Spec.Ingress.DnsDomain)
 
 	locals.IngressHostnames = []string{
 		locals.IngressExternalHostname,
@@ -84,7 +84,7 @@ func initializeLocals(ctx *pulumi.Context, stackInput *locustkubernetesv1.Locust
 	//if the kubernetes-cluster is created using Planton Cloud, then the cluster-issuer name will be
 	//same as the ingress-domain-name as long as the same ingress-domain-name is added to the list of
 	//ingress-domain-names for the GkeCluster/EksCluster/AksCluster spec.
-	locals.IngressCertClusterIssuerName = locustKubernetes.Spec.Ingress.EndpointDomainName
+	locals.IngressCertClusterIssuerName = locustKubernetes.Spec.Ingress.DnsDomain
 
 	locals.IngressCertSecretName = locustKubernetes.Metadata.Id
 
